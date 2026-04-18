@@ -13,54 +13,32 @@ body {
     width: 100%;
     font-family: Arial, sans-serif;
     background: var(--main-gradient);
+    background-attachment: fixed;
     color: white;
-
     display: flex;
-    flex-direction: column;  /* IMPORTANT */
-    align-items: center;
-
-    gap: 30px;
-    padding: 20px;
-}
-
-
-@media (max-width:1150px) {
-    body {
-        /* min-height: 100vh;
-    width: 100%;
-    font-family: Arial, sans-serif;
-    background: var(--main-gradient);
-    color: white;
-    display: flex; */
-        flex-direction: column;
-        /* gap: 50px;
+    gap: 50px;
     justify-content: center;
     align-items: center;
-    padding: 20px; */
+    padding: 20px;
+    padding-bottom: 80px;
+}
+
+@media (max-width: 1150px) {
+    body {
+        flex-direction: column;
     }
 }
 
-.todo-heading {
-    font-size: 2.5rem;
-    font-weight: 800;
-
-    background: linear-gradient(90deg, #ffffff, #ffdd57);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-
-    margin-top: 10px;
-    text-align: center;
-}
-
 .containers {
-    height: 550px;
+    min-height: 550px;
+    height: auto;
     width: 100%;
     max-width: 400px;
     background-color: rgba(118, 75, 162, 0.85);
     border-radius: 10px;
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
     padding: 20px;
+    overflow-y: auto;
 }
 
 .containers p {
@@ -70,36 +48,37 @@ body {
     margin-bottom: 20px;
 }
 
-#input,
-#addBtn {
+input[type="text"] {
     padding: 10px;
     margin-bottom: 15px;
     border-radius: 5px;
     border: none;
     font-size: 1rem;
-}
-
-#input {
     width: 70%;
     outline: none;
 }
 
-#addBtn {
+button {
+    padding: 10px;
     margin-left: 10px;
     width: 25%;
     background-color: #6a4ba2;
     color: white;
     cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
     transition: background-color 0.3s ease;
 }
 
-#addBtn:hover {
+button:hover {
     background-color: #563d7c;
 }
 
 ul {
     list-style: none;
     padding-left: 0;
+    margin-top: 10px;
 }
 
 li {
@@ -120,14 +99,20 @@ li button {
     color: white;
     cursor: pointer;
     font-size: 1rem;
+    width: auto;
+    margin: 0;
+    padding: 0;
 }
 
+li button:hover {
+    background: none;
+    color: #ffdd57;
+}
 
 .footer {
     background: rgba(118, 75, 162, 0.85);
     color: white;
-    padding: px 0;
-    margin-top: 20px;
+    padding: 5px 0;
     position: fixed;
     bottom: 0;
     left: 0;
