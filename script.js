@@ -1,30 +1,63 @@
-const input = document.getElementById('input');
-const addElement = document.getElementById('addElement');
-const addBtn = document.getElementById('addBtn');
+function setupList(inputId, btnId, elementId) {
+    const input = document.getElementById(inputId);
+    const addBtn = document.getElementById(btnId);
+    const addElement = document.getElementById(elementId);
+    const storageKey = elementId; // unique key for each list
 
-// Create UL once
-const ul = document.createElement('ul');
-addElement.appendChild(ul);
+    const ul = document.createElement('ul');
+    addElement.appendChild(ul);
 
-// Add button click event
-addBtn.addEventListener('click', function () {
-    const value = input.value.trim();
+    // Load saved tasks
+    const savedTasks = JSON.parse(localStorage.getItem(storageKey)) || [];
+    savedTasks.forEach(task => createTask(task));
 
-    if (!value) {
-        alert("Please enter a task!");
-        return;
+    addBtn.addEventListener('click', function () {
+        addTask();
+    });
+
+    input.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') addTask();
+    });
+
+    function addTask() {
+        const value = input.value.trim();
+        if (!value) {
+            alert("Please enter a task!");
+            return;
+        }
+        createTask(value);
+        saveToStorage();
+        input.value = '';
     }
 
-    const list = document.createElement('li');
-    list.textContent = value;
+    function createTask(value) {
+        const list = document.createElement('li');
+        list.textContent = value;
 
-    // Delete button
-    const deleteBtn = document.createElement('button');
-    deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
-    deleteBtn.addEventListener('click', () => ul.removeChild(list));
+        const deleteBtn = document.createElement('button');
+        deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
+        deleteBtn.addEventListener('click', () => {
+            ul.removeChild(list);
+            saveToStorage();
+        });
 
-    list.appendChild(deleteBtn);
-    ul.appendChild(list);
+        list.appendChild(deleteBtn);
+        ul.appendChild(list);
+    }
 
-    input.value = '';
-});
+    function saveToStorage() {
+        const tasks = [];
+        ul.querySelectorAll('li').forEach(li => {
+            tasks.push(li.childNodes[0].textContent);
+        });
+        try {
+            localStorage.setItem(storageKey, JSON.stringify(tasks));
+        } catch(e) {
+            alert('Storage full!');
+        }
+    }
+}
+
+setupList('input1', 'addBtn1', 'addElement1');
+setupList('input2', 'addBtn2', 'addElement2');
+setupList('input3', 'addBtn3', 'addElement3');
